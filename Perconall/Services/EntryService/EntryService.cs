@@ -1,30 +1,35 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Perconall.Core.Models;
+using Perconall.Core.Repositories;
 using Perconall.Dtos;
-using Perconall.Models;
 
 namespace Perconall.Services.EntryService
 {
     public class EntryService : IEntryService
     {
         private readonly EntryFactory _factory;
-        private IList<Entry> _entries;
+        private readonly Database _database;
 
-        public EntryService(EntryFactory factory)
+        public EntryService(EntryFactory factory, Database database)
         {
             _factory = factory;
-            _entries = new List<Entry>();
+            _database = database;
         }
         
         public async Task Add(AddEntryDto addEntryDto)
         {
             var entry = _factory.Create(addEntryDto);
-            _entries.Add(entry);
+
+            await _database.EntryTable.AddAsync(entry).ConfigureAwait(false);
+            await _database.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Entry>> Get()
         {
-            return _entries;
+            return _database.EntryTable.AsNoTracking();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Perconall.Models
+﻿namespace Perconall.Core.Models
 {
     public class Entry
     {

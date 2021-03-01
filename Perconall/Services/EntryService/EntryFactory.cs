@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
+using Perconall.Core.Models;
 using Perconall.Dtos;
-using Perconall.Models;
 
 namespace Perconall.Services.EntryService
 {
