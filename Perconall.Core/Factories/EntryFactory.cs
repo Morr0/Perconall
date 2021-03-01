@@ -1,9 +1,9 @@
 ﻿using System;
 using AutoMapper;
 using Perconall.Core.Models;
-using Perconall.Dtos;
+using Perconall.Core.Dtos;
 
-namespace Perconall.Services.EntryService
+namespace Perconall.Core.Factories
 {
     public class EntryFactory
     {

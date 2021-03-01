@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Perconall.Core.Dtos;
+using Perconall.Core.Factories;
 using Perconall.Core.Models;
 using Perconall.Core.Repositories;
-using Perconall.Dtos;
 using Perconall.Services.MessageQueueingService;
 
 namespace Perconall.Services.EntryService

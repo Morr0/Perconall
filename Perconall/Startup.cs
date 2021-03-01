@@ -6,8 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Perconall.Core.Factories;
 using Perconall.Core.Repositories;
 using Perconall.Core.Utilities.Configuration;
+using Perconall.Core.Utilities.MappingProfiles;
 using Perconall.Services.EntryService;
 using Perconall.Services.MessageQueueingService;
 
@@ -27,7 +29,7 @@ namespace Perconall
             services.Configure<ConnectionStrings>(_configuration.GetSection("ConnectionStrings"));
             
             services.AddControllers();
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(MappingProfilesUtility.GetProfiles());
 
             services.AddSingleton<EntryFactory>();
 
@@ -37,7 +39,6 @@ namespace Perconall
             var connectionStrings = serviceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
             services.AddDbContext<Database>((opts) =>
             {
-
                 opts.UseNpgsql(connectionStrings.Value.Postgresql,
                     x => x.MigrationsAssembly("Perconall.PublicApi"));
             });

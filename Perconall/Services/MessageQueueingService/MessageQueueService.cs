@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Perconall.Core.Constants;
 using Perconall.Core.Utilities.Configuration;
 using RabbitMQ.Client;
 
@@ -11,8 +12,6 @@ namespace Perconall.Services.MessageQueueingService
     // WILL INIT SYNCHRONOUSLY
     public class MessageQueueService : IMessageQueueService, IDisposable
     {
-        private static readonly string QueueName = "Perconall";
-        
         private IConnection _connection;
         private IModel _channel;
 
@@ -28,9 +27,7 @@ namespace Perconall.Services.MessageQueueingService
 
             _channel = _connection.CreateModel();
 
-            _channel.QueueDeclare(QueueName, durable: true, autoDelete: false, exclusive: false);
-            var props = _channel.CreateBasicProperties();
-            props.Persistent = true;
+            _channel.QueueDeclarePassive(MessagingServiceConstants.QueueName);
         }
 
         public void Dispose()
@@ -45,7 +42,7 @@ namespace Perconall.Services.MessageQueueingService
             {
                 string serializedJson = JsonSerializer.Serialize(obj);
                 byte[] bytes = Encoding.UTF8.GetBytes(serializedJson);
-                _channel.BasicPublish("", QueueName, body: bytes);
+                _channel.BasicPublish("", MessagingServiceConstants.QueueName, body: bytes);
             }).ConfigureAwait(false);
         }
     }

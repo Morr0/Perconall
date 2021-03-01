@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Perconall.Core.Dtos;
 using Perconall.Core.Models;
-using Perconall.Dtos;
 
 namespace Perconall.Services.EntryService
 {

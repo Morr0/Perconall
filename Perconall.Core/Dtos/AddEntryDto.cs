@@ -1,4 +1,4 @@
-﻿namespace Perconall.Dtos
+﻿namespace Perconall.Core.Dtos
 {
     public class AddEntryDto
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Perconall.Dtos;
+using Perconall.Core.Dtos;
 using Perconall.Services.EntryService;
 
 namespace Perconall.Controllers
