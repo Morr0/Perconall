@@ -5,8 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Perconall.Core.Repositories;
+using Perconall.Core.Utilities.Configuration;
 using Perconall.Services.EntryService;
+using Perconall.Services.MessageQueueingService;
 
 namespace Perconall
 {
@@ -21,19 +24,26 @@ namespace Perconall
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ConnectionStrings>(_configuration.GetSection("ConnectionStrings"));
+            
             services.AddControllers();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddSingleton<EntryFactory>();
 
             services.AddTransient<IEntryService, EntryService>();
-            
+
+            var serviceProvider = services.BuildServiceProvider();
+            var connectionStrings = serviceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
             services.AddDbContext<Database>((opts) =>
             {
-                opts.UseNpgsql(
-                    _configuration.GetSection("ConnectionStrings").GetSection("Postgresql").Value,
+
+                opts.UseNpgsql(connectionStrings.Value.Postgresql,
                     x => x.MigrationsAssembly("Perconall.PublicApi"));
             });
+            serviceProvider.Dispose();
+
+            services.AddSingleton<IMessageQueueService, MessageQueueService>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

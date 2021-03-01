@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Perconall.Core.Models;
 using Perconall.Core.Repositories;
 using Perconall.Dtos;
+using Perconall.Services.MessageQueueingService;
 
 namespace Perconall.Services.EntryService
 {
@@ -12,19 +13,18 @@ namespace Perconall.Services.EntryService
     {
         private readonly EntryFactory _factory;
         private readonly Database _database;
+        private readonly IMessageQueueService _messageQueueService;
 
-        public EntryService(EntryFactory factory, Database database)
+        public EntryService(EntryFactory factory, Database database, IMessageQueueService messageQueueService)
         {
             _factory = factory;
             _database = database;
+            _messageQueueService = messageQueueService;
         }
         
         public async Task Add(AddEntryDto addEntryDto)
         {
-            var entry = _factory.Create(addEntryDto);
-
-            await _database.EntryTable.AddAsync(entry).ConfigureAwait(false);
-            await _database.SaveChangesAsync();
+            await _messageQueueService.Publish(addEntryDto).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Entry>> Get()
