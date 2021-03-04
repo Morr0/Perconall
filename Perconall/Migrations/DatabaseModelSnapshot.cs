@@ -26,8 +26,17 @@ namespace Perconall.Migrations
                     b.Property<string>("Date")
                         .HasColumnType("text");
 
+                    b.Property<float>("Kg")
+                        .HasColumnType("real");
+
                     b.Property<string>("Notes")
                         .HasColumnType("text");
+
+                    b.Property<bool>("OnSleep")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OnWakeup")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

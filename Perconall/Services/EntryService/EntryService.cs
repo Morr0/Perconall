@@ -24,6 +24,7 @@ namespace Perconall.Services.EntryService
         
         public async Task Add(AddEntryDto addEntryDto)
         {
+            // TODO check that waking/sleeping flags for same date
             await _messageQueueService.Publish(addEntryDto).ConfigureAwait(false);
         }
 
