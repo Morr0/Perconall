@@ -43,7 +43,7 @@ namespace Perconall.Worker.BackgroundServices.EntriesService
             _connection = connectionFactory.CreateConnection(connectionString);
             _channel = _connection.CreateModel();
 
-            _channel.QueueDeclarePassive(MessagingServiceConstants.QueueName);
+            _channel.QueueDeclare(MessagingServiceConstants.QueueName, true, false, false, null);
 
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.Received += Handle;

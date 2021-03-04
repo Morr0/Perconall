@@ -27,7 +27,7 @@ namespace Perconall.Services.MessageQueueingService
 
             _channel = _connection.CreateModel();
 
-            _channel.QueueDeclarePassive(MessagingServiceConstants.QueueName);
+            _channel.QueueDeclare(MessagingServiceConstants.QueueName, true, false, false, null);
         }
 
         public void Dispose()

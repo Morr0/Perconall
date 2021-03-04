@@ -45,6 +45,16 @@ namespace Perconall
             serviceProvider.Dispose();
 
             services.AddSingleton<IMessageQueueService, MessageQueueService>();
+
+            services.AddCors(x =>
+            {
+                x.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,6 +65,8 @@ namespace Perconall
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
