@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {getMany} from "../api/entry/entryApi";
-import Entry from "../components/Entry";
+import Entries from "../components/Entries";
 
 const Home = () => {
     const [entries, setEntries] = useState([]);
@@ -13,9 +13,13 @@ const Home = () => {
     }, []);
 
     return (
-        entries.map((entry, i) => (
-            <Entry key={i} {...entry} />
-        ))
+        <div className="container">
+            <div className="col"></div>
+            <div className="col">
+                <Entries entries={entries} />
+            </div>
+            <div className="col"></div>
+        </div>
     );
 };
 
