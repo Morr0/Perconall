@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {getMany} from "../api/entry/entryApi";
-import Entries from "../components/Entries";
+import Entries from "../components/Entries/Entries";
 
 const Home = () => {
     const [entries, setEntries] = useState([]);

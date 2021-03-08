@@ -1,11 +1,7 @@
-import AddEntry from "./AddEntry";
-
 // TODO extract hardcoding
 const url = "http://localhost:5000/api/v1/entry";
 
 export const add = async (addEntry) => {
-    if (!(addEntry instanceof AddEntry)) throw new Error("Must pass AddEntry object");
-
     await fetch(url, {
         method: "POST",
         body: JSON.stringify(addEntry),
