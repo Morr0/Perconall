@@ -16,7 +16,7 @@ const Home = () => {
         <div className="container">
             <div className="col"></div>
             <div className="col">
-                <Entries entries={entries} />
+                <Entries entries={entries} setEntries={setEntries} />
             </div>
             <div className="col"></div>
         </div>
